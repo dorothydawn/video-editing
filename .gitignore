@@ -1,0 +1,16 @@
+# media & build products stay local — only edit specs, notes and code are versioned
+projects/*/source/
+projects/*/work/
+projects/*/out/
+projects/*/assets/*
+!projects/*/assets/.keep
+.vedit-cache/
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.m4a
+*.mp3
+__pycache__/
+*.egg-info/
+.venv/

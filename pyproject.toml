@@ -1,0 +1,23 @@
+[project]
+name = "vedit"
+version = "0.1.0"
+description = "Code-driven editing for viral reels and long-form videos (ffmpeg + faster-whisper)"
+requires-python = ">=3.10"
+dependencies = [
+    "faster-whisper>=1.1",
+    "yt-dlp",
+    "opencv-python-headless>=4.8",
+    "scenedetect>=0.6.4",
+    "numpy",
+    "pillow",
+]
+
+[project.scripts]
+vedit = "vedit.cli:main"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["vedit"]

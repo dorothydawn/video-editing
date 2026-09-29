@@ -1,0 +1,16 @@
+{
+  "source": "source/REPLACE.mp4",
+  "output": "out/reel.mp4",
+  "format": "vertical",
+  "tighten": {"max_gap": 0.25, "pad_in": 0.05, "pad_out": 0.12},
+  "punch_in": 1.15,
+  "reframe": "face",
+  "segments": [
+    {"start": 0.0, "end": 3.0, "zoom": 1.25, "note": "HOOK: strongest line / payoff first"},
+    {"start": 10.0, "end": 40.0, "note": "body"}
+  ],
+  "captions": {"style": "bold", "emphasis": []},
+  "texts": [{"text": "3-8 word hook that matches the promise", "at": 0, "duration": 2.5, "style": "hook"}],
+  "sfx": [{"file": "../../assets/sfx/pop.wav", "at": 0.0, "gain_db": -8}],
+  "loudness": {"lufs": -14, "tp": -1.0}
+}

@@ -1,0 +1,1 @@
+Synthesised in this repo by vedit/sfxgen.py (run: vedit sfx-gen). No third-party audio; free to use (CC0).

@@ -1,0 +1,15 @@
+{
+  "source": "source/REPLACE.mp4",
+  "output": "out/reel.mp4",
+  "format": "vertical",
+  "tighten": {"max_gap": 0.3},
+  "reframe": "center",
+  "layout": "fit-blur",
+  "segments": [
+    {"start": 0.0, "end": 4.0, "note": "hook"},
+    {"start": 20.0, "end": 26.0, "layout": "crop", "zoom": 1.0, "focus": [0.35, 0.5], "note": "crop into the part of the screen that matters"},
+    {"start": 30.0, "end": 45.0}
+  ],
+  "captions": {"style": "bold", "y": 0.70},
+  "texts": [{"text": "The hook in words", "at": 0, "duration": 2.5, "style": "hook"}]
+}

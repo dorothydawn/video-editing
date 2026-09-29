@@ -1,0 +1,19 @@
+{
+  "source": "source/REPLACE.mp4",
+  "output": "out/video.mp4",
+  "format": "horizontal",
+  "tighten": {"max_gap": 0.45, "pad_in": 0.08, "pad_out": 0.2},
+  "punch_in": 1.12,
+  "segments": [
+    {"start": 0.0, "end": 20.0, "note": "cold open: the moment the thumbnail promises"},
+    {"start": 60.0, "end": 600.0, "note": "body"}
+  ],
+  "captions": false,
+  "texts": [{"text": "Name — what they do", "src_at": 65.0, "duration": 4, "style": "label"}],
+  "broll": [],
+  "music": {"file": "assets/REPLACE_music.mp3", "gain_db": -22, "duck": true},
+  "chapters": [{"at": 0, "title": "Intro"}],
+  "loudness": {"lufs": -14, "tp": -1.0},
+  "preset": "medium",
+  "crf": 18
+}
