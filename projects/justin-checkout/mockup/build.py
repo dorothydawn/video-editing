@@ -78,7 +78,10 @@ def pill(d, xy, text, f, fg, bg, pad=(18, 9)):
 
 # ---------------------------------------------------------------- screens
 
-def monitor(w, h, occluded_from):
+HEADLINE = ("Sing like", "your favs.")
+
+
+def monitor(w, h, occluded_from, headline=HEADLINE):
     """Hero: Justin's best smile in lesson-player chrome; white + lime tagline like the site's headlines."""
     img = cover(still("intro", 64.20), w, h, focus=(0.37, 0.34), zoom=1.3).convert("RGBA")
     img.alpha_composite(vgradient(w, h, (*DEEP, 0), (*DEEP, 235), start=0.35))
@@ -88,8 +91,11 @@ def monitor(w, h, occluded_from):
     d = ImageDraw.Draw(img)
     base = occluded_from - 110
     pill(d, (48, base - 292), "TRAIN YOUR EAR", H0(26), BLACK, LIME)
-    d.text((44, base - 246), "One voice.", font=H1(84), fill=WHITE)
-    d.text((44, base - 150), "Every artist.", font=H1(84), fill=LIME)
+    size = 84
+    while max(d.textlength(t, font=H1(size)) for t in headline) > w * 0.46:  # stay clear of his face
+        size -= 2
+    d.text((44, base - 246), headline[0], font=H1(size), fill=WHITE)
+    d.text((44, base - 150), headline[1], font=H1(size), fill=LIME)
     play_icon(d, 66, base, 22, WHITE)
     progress(d, 110, w - 190, base, 0.34, h=10)
     d.text((w - 172, base - 18), "4:12", font=UI(28), fill=MUTED)
@@ -197,20 +203,20 @@ def backdrop(size, base, glow, glow_alpha):
     return bg
 
 
-def build():
+def build(headline=HEADLINE, tag=""):
     S = 2
     raw = cv2.imread(str(HERE / "template.png"))
     tpl = load_template(HERE / "template.png", S)
     mon, tab, lap, ph_big, ph_small = find_screens(raw, scale=S)
     contents = [
-        monitor(*mon.size, occluded_from=lap.box[1] - mon.box[1]),
+        monitor(*mon.size, occluded_from=lap.box[1] - mon.box[1], headline=headline),
         tablet(*tab.size),
         laptop(*lap.size),
         phone_outcome(*ph_big.size),
         phone_bonus(*ph_small.size),
     ]
     devices = composite(tpl, [mon, tab, lap, ph_big, ph_small], contents)
-    devices.save(OUT / "devices-transparent.png")
+    devices.save(OUT / f"devices-transparent{tag}.png")
     themes = {  # name: (background, glow, glow alpha, shadow colour, shadow opacity)
         "navy": (NAVY, (58, 104, 158), 150, (0, 0, 0), 0.45),
         "cream": (CREAM, (214, 226, 238), 255, DEEP, 0.25),
@@ -218,11 +224,11 @@ def build():
     for name, (base, glow, ga, sh, so) in themes.items():
         master = place_on(devices, (3000, 2250), backdrop((3000, 2250), base, glow, ga), margin=0.035,
                           shadow=sh, shadow_opacity=so)
-        master.resize((2000, 1500), Image.LANCZOS).save(OUT / f"checkout-graphic-{name}-2000x1500.jpg", quality=90, optimize=True)
+        master.resize((2000, 1500), Image.LANCZOS).save(OUT / f"checkout-graphic-{name}{tag}-2000x1500.jpg", quality=90, optimize=True)
         sq = place_on(devices, (2400, 2400), backdrop((2400, 2400), base, glow, ga), margin=0.06, shadow=sh, shadow_opacity=so)
-        sq.resize((1600, 1600), Image.LANCZOS).save(OUT / f"checkout-graphic-{name}-square-1600.jpg", quality=90, optimize=True)
+        sq.resize((1600, 1600), Image.LANCZOS).save(OUT / f"checkout-graphic-{name}{tag}-square-1600.jpg", quality=90, optimize=True)
         for wpx in (650, 360):
-            master.resize((wpx, int(wpx * 0.75)), Image.LANCZOS).save(OUT / f"preview-{name}-{wpx}px.png")
+            master.resize((wpx, int(wpx * 0.75)), Image.LANCZOS).save(OUT / f"preview-{name}{tag}-{wpx}px.png")
     print("done", OUT)
 
 
