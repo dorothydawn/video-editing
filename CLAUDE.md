@@ -95,6 +95,25 @@ into the lens, no hand blur. Smiles peak for a few frames; blinks hide next to t
 (for device mockups/hero screens), square (avatars, crops to a circle) and the full frame, with a
 light grade (contrast ~+7%, saturation ~+10%, slightly warmer) — never heavy filters on a real person.
 
+## Branding & design knowledge base (read before any graphic, thumbnail, carousel or brand work)
+
+- `docs/brand-strategy.md` — how brands grow (distinctive assets, category entry points, brand vs activation),
+  positioning, voice, creator branding, **brand-kit + brand-audit checklists** (fill a kit per client).
+- `docs/visual-design.md` — typography/colour/layout/hierarchy rules with numbers + an automatable QA checklist
+  (min text size at real display width, WCAG + APCA contrast, squint test).
+- `docs/creator-design.md` — thumbnails, carousels, covers, 2025-26 trends, AI rules, checkout-page visuals.
+- `docs/motion.md` — easing/durations, caption reading speed, branded video systems, transitions, tooling,
+  and a motion style-guide template.
+
+Non-negotiables distilled from them:
+- **Consistency beats novelty.** Each brand keeps 3-5 fixed assets (face/framing, one colour, one caption
+  style, SFX palette, a named method/series) and they show in the first 2 s. Never "refresh" for boredom.
+- **Graphics tease the sales copy in its own words** — never expose internal module names.
+- **One message, one focal point, one accent.** Check legibility at the real display size
+  (thumbnail ~160 px wide, checkout column ~650/360 px) and *look* at the downscaled render.
+- **Real over rendered.** Real photos of the real person; AI only for set dressing — never faces or proof.
+- Tag claims by evidence; don't sell folklore (colour psychology, archetypes, "3-word thumbnails") as fact.
+
 ## Gotchas
 
 - Whisper word times can be ~50-150 ms off; `pad_in`/`pad_out` cover it. If a cut clips a word, raise
