@@ -87,6 +87,14 @@ Re-renders are fast: per-clip encodes are cached in `work/clips/`, transcripts/f
 frames), preferring scenes the video dwells on. For a specific moment: `vedit frame <file> 83.5 --window 1 -o x.png`
 (sharpest frame within ±1 s). Always look at the results and discard weak ones before delivering.
 
+**Photos of a person** (checkout pages, bios, thumbnails): `vedit portraits <file> -o <dir> -n 12` scores
+every 0.5 s on face sharpness, stillness, frontal pose and smile, and exports frame + square headshot for
+the top picks plus a `candidates.jpg` sheet. The scores only shortlist — then step frame-by-frame
+(1/15 s) around the best moments with face crops and pick by eye: eyes open, genuine smile, looking
+into the lens, no hand blur. Smiles peak for a few frames; blinks hide next to them. Deliver 16:9
+(for device mockups/hero screens), square (avatars, crops to a circle) and the full frame, with a
+light grade (contrast ~+7%, saturation ~+10%, slightly warmer) — never heavy filters on a real person.
+
 ## Gotchas
 
 - Whisper word times can be ~50-150 ms off; `pad_in`/`pad_out` cover it. If a cut clips a word, raise

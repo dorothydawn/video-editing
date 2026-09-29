@@ -36,6 +36,10 @@ def main(argv: list[str] | None = None):
     p.add_argument("src"); p.add_argument("-o", "--out", required=True); p.add_argument("-n", type=int, default=12)
     p.add_argument("--threshold", type=float, default=27.0, help="scene sensitivity (lower = more scenes)")
 
+    p = sub.add_parser("portraits", help="most flattering frames of a person (sharp, still, facing camera, smiling)")
+    p.add_argument("src"); p.add_argument("-o", "--out", required=True); p.add_argument("-n", type=int, default=12)
+    p.add_argument("--gap", type=float, default=3.0, help="min seconds between picks")
+
     p = sub.add_parser("scenes", help="list scene cuts")
     p.add_argument("src"); p.add_argument("--threshold", type=float, default=27.0)
 
@@ -77,6 +81,13 @@ def main(argv: list[str] | None = None):
         from .frames import shots
         for p_ in shots(a.src, a.out, n=a.n, threshold=a.threshold):
             print(p_)
+    elif a.cmd == "portraits":
+        from .frames import sheet
+        from .portraits import export, pick, score_video
+        cands = export(a.src, pick(score_video(a.src), a.n, a.gap), a.out)
+        for c in cands:
+            print(f"{c['t']:8.2f}s  score {c['score']:.3f}  smile {c['smile']:.2f}  {c['frame']}")
+        print(sheet(a.src, Path(a.out) / "candidates.jpg", times=[c["t"] for c in cands], width=360))
     elif a.cmd == "scenes":
         from .ff import ts
         from .frames import scenes
