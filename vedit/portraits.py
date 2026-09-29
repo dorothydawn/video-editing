@@ -122,3 +122,45 @@ def export(src: str | Path, cands: list[dict], out_dir: str | Path, prefix: str 
         cv2.imwrite(str(head), img[y0:y0 + int(side), x0:x0 + int(side)])
         c.update(t=round(t, 2), frame=str(full), headshot=str(head), headshot_px=int(side), src_size=[m.width, m.height])
     return cands
+
+
+def grade(bgr: np.ndarray, contrast: float = 1.07, saturation: float = 1.10, warmth: float = 0.025):
+    """Light, natural grade for real people: a touch of contrast/colour, slightly warmer. Returns PIL RGB."""
+    from PIL import Image, ImageEnhance
+
+    im = Image.fromarray(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
+    im = ImageEnhance.Color(ImageEnhance.Contrast(im).enhance(contrast)).enhance(saturation)
+    a = np.asarray(im).astype(np.float32)
+    a[..., 0] *= 1 + warmth
+    a[..., 2] *= 1 - warmth
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+
+
+def export_still(src: str | Path, t: float, out_dir: str | Path, name: str) -> dict:
+    """Graded full frame + 16:9 + square headshot + 4:5 portrait crop of the largest face at time t."""
+    from .frames import grab
+
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    img = grab(src, t)
+    H, W = img.shape[:2]
+    det = cv2.FaceDetectorYN.create(str(MODEL), "", (W, H), 0.6)
+    _, found = det.detect(img)
+    x, y, w, h = max(found, key=lambda r: r[2] * r[3])[:4] if found is not None else (W / 3, H / 4, W / 3, H / 3)
+    cx, cy = x + w / 2, y + h / 2
+    g = grade(img)
+    paths = {"full": out_dir / f"{name}-full.jpg"}
+    g.save(paths["full"], quality=94)
+
+    def crop(aspect: float, scale: float, key: str, face_y: float = 0.40):
+        ch = min(H, W / aspect, h * scale)
+        cw = ch * aspect
+        x0 = min(max(cx - cw / 2, 0), W - cw)
+        y0 = min(max(cy - ch * face_y, 0), H - ch)
+        paths[key] = out_dir / f"{name}-{key}.jpg"
+        g.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).save(paths[key], quality=94)
+
+    crop(16 / 9, 99, "16x9")
+    crop(1.0, 2.9, "square", 0.42)
+    crop(4 / 5, 3.6, "4x5", 0.36)
+    return {k: str(v) for k, v in paths.items()}

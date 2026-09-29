@@ -14,3 +14,4 @@ projects/*/assets/*
 __pycache__/
 *.egg-info/
 .venv/
+assets/models/face_recognition_sface_2021dec.onnx
