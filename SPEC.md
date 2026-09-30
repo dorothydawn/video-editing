@@ -5,6 +5,7 @@ the spec's folder. Render it with `vedit render <spec> [--plan | --draft]`.
 
 ```jsonc
 {
+  "brand": "justin",                  // optional: brands/<name>/brand.json supplies caption/text styles, SFX cues, loudness
   "source": "source/talk.mp4",        // default source for segments
   "output": "out/reel.mp4",           // default out/<spec name>.mp4
   "format": "vertical",               // vertical 1080x1920 | horizontal 1920x1080 | square 1080x1080 | portrait 1080x1350 | "WxH"
@@ -44,7 +45,8 @@ the spec's folder. Render it with `vedit render <spec> [--plan | --draft]`.
   ],
 
   "music": {"file": "assets/bed.mp3", "gain_db": -18, "duck": true, "from": 0, "fade_in": 0.3},
-  "sfx": [{"file": "../../assets/sfx/whoosh.wav", "src_at": 20.4, "gain_db": -6}],
+  "sfx": [{"file": "../../assets/sfx/whoosh.wav", "src_at": 20.4, "gain_db": -6},
+          {"cue": "pop", "at": 0.05}],                                // cue = named sound from the brand palette / bundled pack
   "voice": {"enhance": true, "denoise": false, "gain_db": 0},    // enhance = high-pass + gentle compression
 
   "loudness": {"lufs": -14, "tp": -1.0},                        // final master target

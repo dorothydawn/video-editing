@@ -105,6 +105,13 @@ light grade (contrast ~+7%, saturation ~+10%, slightly warmer) — never heavy f
 - `docs/motion.md` — easing/durations, caption reading speed, branded video systems, transitions, tooling,
   and a motion style-guide template.
 
+**Brand kits:** `brands/<client>/brand.json` is the single source of truth for a client's colours, fonts,
+caption style, text styles, SFX palette, loudness, voice, positioning, copy bank, series and approved photos.
+Specs opt in with `"brand": "<client>"` (spec values still win); SFX can be named cues (`{"cue": "pop"}`).
+`vedit brand-board <client>` renders a one-page board to review it. Kits are drafts: when the client changes
+something, edit the JSON, re-render the board and any deliverables. Graphics code should read colours from
+the kit (see `projects/justin-checkout/mockup/build.py`), never hard-code them.
+
 Non-negotiables distilled from them:
 - **Consistency beats novelty.** Each brand keeps 3-5 fixed assets (face/framing, one colour, one caption
   style, SFX palette, a named method/series) and they show in the first 2 s. Never "refresh" for boredom.

@@ -56,6 +56,9 @@ def main(argv: list[str] | None = None):
 
     sub.add_parser("sfx-gen", help="regenerate the bundled SFX pack")
 
+    p = sub.add_parser("brand-board", help="render brands/<name>/out/brand-board.png from the brand kit")
+    p.add_argument("name")
+
     a = ap.parse_args(argv)
 
     if a.cmd == "fetch":
@@ -109,6 +112,9 @@ def main(argv: list[str] | None = None):
         r = ffmpeg("-i", a.src, "-af", "loudnorm=print_format=json", "-f", "null", "-", loglevel="info")
         m = json.loads(r.stderr[r.stderr.rindex("{"):r.stderr.rindex("}") + 1])
         print(f"integrated {m['input_i']} LUFS, true peak {m['input_tp']} dBTP, LRA {m['input_lra']} LU")
+    elif a.cmd == "brand-board":
+        from .brandboard import render as board
+        print(board(a.name))
     elif a.cmd == "sfx-gen":
         from .sfxgen import generate
         for p_ in generate():

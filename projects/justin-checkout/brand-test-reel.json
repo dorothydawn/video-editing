@@ -1,0 +1,12 @@
+{
+  "brand": "justin",
+  "source": "source/intro.mp4",
+  "output": "out/brand-test-reel.mp4",
+  "format": "vertical",
+  "tighten": true,
+  "punch_in": 1.15,
+  "segments": [{"start": 0.0, "end": 14.0}],
+  "captions": {"emphasis": ["unrecognizable", "transformed"]},
+  "texts": [{"text": "Unrecognizable, guaranteed.", "at": 0, "duration": 2.6, "style": "hook"}],
+  "sfx": [{"cue": "pop", "at": 0.05, "gain_db": -8}]
+}

@@ -21,6 +21,8 @@ from .timeline import norm
 FONT_FILES = {
     "Poppins Black": "Poppins-Black.ttf", "Poppins ExtraBold": "Poppins-ExtraBold.ttf",
     "Poppins SemiBold": "Poppins-SemiBold.ttf", "Anton": "Anton-Regular.ttf", "Bebas Neue": "BebasNeue-Regular.ttf",
+    "Montserrat Black": "Montserrat-Black.ttf", "Montserrat ExtraBold": "Montserrat-ExtraBold.ttf",
+    "Montserrat Bold": "Montserrat-Bold.ttf",
 }
 
 STYLES: dict[str, dict] = {

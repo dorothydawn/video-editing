@@ -19,21 +19,23 @@ SRC = HERE.parent / "source"
 OUT = HERE.parent / "out" / "mockup"
 OUT.mkdir(parents=True, exist_ok=True)
 
-# brand palette
-NAVY = (25, 58, 97)        # #193A61  page background
-DEEP = (13, 31, 53)        # #0D1F35  dark cards
-SLATE = (46, 73, 107)      # #2E496B  secondary surfaces
-LIME = (167, 255, 112)     # #A7FF70  accent: key words, buttons, progress
-TEAL = (42, 140, 167)      # #2A8CA7  secondary accent
-CREAM = (244, 237, 226)    # #F4EDE2  light surface
-GOLD = (233, 180, 58)      # #E9B43A  stars / highlights (sparingly)
-MUTED = (194, 203, 214)    # #C2CBD6  secondary text on dark
+# brand palette: read from the brand kit so edits to brands/justin/brand.json flow into this graphic
+from vedit import brand as bk  # noqa: E402
+
+KIT = bk.load("justin")
+NAVY = bk.rgb(KIT, "background")
+DEEP = bk.rgb(KIT, "surface")
+SLATE = bk.rgb(KIT, "surface_2")
+LIME = bk.rgb(KIT, "primary")
+CREAM = bk.rgb(KIT, "light_bg")
+GOLD = bk.rgb(KIT, "highlight_2")
+MUTED = bk.rgb(KIT, "text_muted")
 WHITE, BLACK = (255, 255, 255), (0, 0, 0)
 
 
 @lru_cache(None)
 def font(family, weight, size):
-    f = ImageFont.truetype(str(FONTS / {"mont": "Montserrat-VF.ttf", "inter": "Inter-VF.ttf"}[family]), size)
+    f = ImageFont.truetype(str(FONTS / "variable" / {"mont": "Montserrat-VF.ttf", "inter": "Inter-VF.ttf"}[family]), size)
     f.set_variation_by_axes([weight] if family == "mont" else [min(32, max(14, size / 2)), weight])
     return f
 

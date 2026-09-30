@@ -18,6 +18,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from . import FONTS
+from . import brand as brandkit
 from . import captions as cap
 from . import faces
 from . import timeline as tl
@@ -46,6 +47,9 @@ class Job:
         self.spec_path = Path(spec_path).resolve()
         self.base = self.spec_path.parent
         self.spec = json.loads(self.spec_path.read_text())
+        self.brand = brandkit.load(self.spec["brand"]) if self.spec.get("brand") else None
+        if self.brand and "loudness" not in self.spec and self.brand.get("loudness"):
+            self.spec["loudness"] = self.brand["loudness"]
         self.draft = draft
         self.name = self.spec_path.stem
         self.work = self.base / "work"
@@ -206,9 +210,10 @@ class Job:
         for i, fx in enumerate(s.get("sfx", [])):
             at = tl.resolve_at(fx, self.clips, self.default_src)
             if at is None:
-                print(f"  sfx {fx.get('file')} skipped: its src_at was cut")
+                print(f"  sfx {fx.get('file', fx.get('cue'))} skipped: its src_at was cut")
                 continue
-            inputs += ["-i", str(self.path(fx["file"]))]
+            fx_file = self.path(fx["file"]) if "file" in fx else brandkit.sfx_path(self.brand, fx["cue"])
+            inputs += ["-i", str(fx_file)]
             ms = max(0, int(round(at * 1000)))
             graph.append(f"[{n}:a]aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo,"
                          f"volume={fx.get('gain_db', -6)}dB,adelay={ms}:all=1[s{i}]")
@@ -249,7 +254,7 @@ class Job:
         # Design at full output resolution; libass scales to the draft size automatically.
         doc = cap.Doc(*out_size(s))
         if s.get("captions"):
-            cap.add_captions(doc, self.out_words, s["captions"])
+            cap.add_captions(doc, self.out_words, brandkit.caption_cfg(self.brand, s["captions"]))
         for t in s.get("texts", []):
             at = tl.resolve_at(t, self.clips, self.default_src)
             start = 0.0 if at is None and "at" not in t and "src_at" not in t else at
@@ -258,7 +263,7 @@ class Job:
                 continue
             end = start + float(t.get("duration", 2.5)) if "end" not in t else float(t["end"])
             cap.add_text(doc, t["text"], start, min(end, self.duration), t.get("style", "hook"),
-                         y=t.get("y"), x=t.get("x"), pop=t.get("pop", True), overrides=t.get("override"))
+                         y=t.get("y"), x=t.get("x"), pop=t.get("pop", True), overrides=brandkit.text_overrides(self.brand, t.get("style", "hook"), t.get("override")))
         if not doc.events:
             return None
         path = self.work / f"{self.name}.ass"

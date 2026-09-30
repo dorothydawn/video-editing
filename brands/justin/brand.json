@@ -1,0 +1,125 @@
+{
+  "name": "Justin",
+  "product": "Learn How to Sound Like Your Favourite Artists",
+  "version": "v1 (draft)",
+  "status": "Draft. Change anything; every render reads from this file, so edits apply everywhere on the next build.",
+
+  "colors": {
+    "primary":     {"hex": "#A7FF70", "role": "The one accent: key words, active caption word, buttons, progress. Use scarcely."},
+    "background":  {"hex": "#193A61", "role": "Brand navy: page and graphic backgrounds, title cards"},
+    "surface":     {"hex": "#0D1F35", "role": "Deep navy: cards, panels, lower-third boxes"},
+    "surface_2":   {"hex": "#2E496B", "role": "Slate: secondary panels, inactive UI, tracks"},
+    "text":        {"hex": "#FFFFFF", "role": "Text on navy"},
+    "text_muted":  {"hex": "#C2CBD6", "role": "Secondary text on navy"},
+    "on_primary":  {"hex": "#000000", "role": "Text on lime (buttons, pills, hook boxes)"},
+    "highlight_2": {"hex": "#E9B43A", "role": "Gold: bonus / stars only, rarely"},
+    "light_bg":    {"hex": "#F4EDE2", "role": "Cream: light-background version of graphics"}
+  },
+
+  "fonts": {
+    "heading": {"family": "Montserrat", "weight": 800, "file": "Montserrat-ExtraBold.ttf", "use": "Headlines, titles"},
+    "display": {"family": "Montserrat", "weight": 900, "file": "Montserrat-Black.ttf", "use": "Captions, labels, pills (caps)"},
+    "ui":      {"family": "Inter", "weight": "600-700", "file": "variable/Inter-VF.ttf", "use": "UI text, lists, small print"},
+    "rules": "Two families only. Headlines in sentence case with a lime phrase next to a white one (e.g. 'Sing like' / 'your favs.'). Caps only for 1-5 word labels, always tracked."
+  },
+
+  "captions": {
+    "style": "bold",
+    "font": "Montserrat Black",
+    "color": "#FFFFFF",
+    "highlight": "#A7FF70",
+    "emphasis_color": "#E9B43A",
+    "outline": 11,
+    "shadow": 5
+  },
+
+  "text_styles": {
+    "hook":        {"font": "Montserrat ExtraBold", "color": "#000000", "box": "#A7FF70"},
+    "title":       {"font": "Montserrat Black", "color": "#FFFFFF"},
+    "label":       {"font": "Montserrat Bold", "color": "#FFFFFF", "box": "#0D1F35E6"},
+    "caption-box": {"font": "Montserrat ExtraBold", "color": "#FFFFFF", "box": "#193A61"}
+  },
+
+  "sfx": {
+    "pop": "assets/sfx/pop.wav",
+    "whoosh": "assets/sfx/whoosh.wav",
+    "impact": "assets/sfx/impact.wav",
+    "ding": "assets/sfx/ding.wav",
+    "riser": "assets/sfx/riser.wav",
+    "click": "assets/sfx/click.wav",
+    "rules": "Same files in every video (the sound palette is a brand asset). 3-6 cues per minute, -18 to -12 dB under voice."
+  },
+
+  "loudness": {"lufs": -14, "tp": -1.0},
+
+  "motion": {
+    "text_in_ms": 300, "text_out_ms": 180, "caption_pop_ms": 100,
+    "ease_in": "cubic-bezier(0.05,0.7,0.1,1)", "ease_out": "cubic-bezier(0.3,0,0.8,0.15)",
+    "transitions_allowed": ["hard cut", "punch-in 1.1-1.2", "zoom 1.3 on emphatic line", "whip 150-250 ms", "2-frame lime flash on impact"],
+    "banned": ["logo intro", "star/heart wipes", "crossfades between jump cuts"]
+  },
+
+  "distinctive_assets": [
+    {"asset": "Justin at the mic: headphones + studio mic, talking straight to camera", "status": "use: already in every video; keep it in every thumbnail/reel opener"},
+    {"asset": "Cap + headphones look", "status": "use: most recognizable across the course videos"},
+    {"asset": "Lime #A7FF70 as the only accent on navy", "status": "invest: new, must stay constant to become recognizable"},
+    {"asset": "Caption style: Montserrat Black caps, white with lime active word", "status": "invest"},
+    {"asset": "Catchphrase: \"How the heck are you doing that?\"", "status": "invest: the audience's own reaction, from the sales copy"},
+    {"asset": "Sound palette: bundled pop/whoosh/ding/impact", "status": "invest"},
+    {"asset": "Sonic signature idea: a short sung run/vocal lick as a 1-2 s sign-off", "status": "proposal: needs Justin"}
+  ],
+
+  "voice": {
+    "traits": [
+      "Playful, but not silly",
+      "Confident, but not arrogant (he'll 'make a BET')",
+      "Practical, but not academic (no theory, no jargon)",
+      "Hyped, but not pushy"
+    ],
+    "status": "Draft, inferred from the sales copy. Confirm with Justin.",
+    "use_words": ["your favs", "unrecognizable", "imitation", "listen", "your own voice", "DOING the thing", "straight inside my brain", "karaoke night"],
+    "avoid_words": ["music theory", "scales", "exercises", "drills", "technique jargon", "guaranteed results (outside the course guarantee)"],
+    "style_notes": "Talks to 'you'. Uses CAPS on one word for emphasis (BET, DOING, OVERTHINKING). Short punchy lines with ellipses for rhythm."
+  },
+
+  "positioning": {
+    "status": "Draft proposal. Needs Justin's sign-off.",
+    "audience": "People who love singing along to their favourite artists (any level, no training needed): content creators, karaoke fans, hobby singers who want to level up.",
+    "alternatives": ["YouTube tutorials", "private lessons (expensive, theory-heavy)", "vocal theory / scales courses", "doing nothing"],
+    "unique": "Teaches imitation through Justin's listening process (hear what makes a singer unique, then recreate it) instead of theory and exercises.",
+    "onlyness": "The only vocal course that teaches you to sing like your favourite artists by first teaching you to hear them like a pro: no theory, no scales.",
+    "core_promise": "Sing like your favs, and unlock a voice you never imagined possible.",
+    "pillars": ["Train your ear", "A foolproof listening process", "Imitate any voice without overthinking"],
+    "proof": ["Real-time breakdowns of Ed Sheeran and Passenger", "Bonus vocal analyses: Green Day & Steve Perry", "Instagram comments from fans", "Guarantee: your voice will be unrecognizable"]
+  },
+
+  "copy_bank": {
+    "headlines": ["Sing like your favs.", "How the heck are you doing that?", "Unrecognizable, guaranteed.", "Learn how to sound like your favourite artists"],
+    "hooks": ["If you've ever watched me and thought: how the heck?", "Here's what makes [artist] sound like [artist]", "You don't need theory to sing like this"],
+    "ctas": ["Get instant access for $27", "Send this to your karaoke buddy", "Save this for your next karaoke night"],
+    "labels": ["Train your ear", "Listening process", "Imitate any voice", "Live breakdowns", "Vocal Analysis", "BONUS WORKBOOK", "NOW SINGING AS"],
+    "rule": "Graphics tease the benefits in these words. Never show internal module names (Mindset, The 3 Dials, Tone/Pronunciation/Style)."
+  },
+
+  "series": {
+    "status": "Proposals built from buying moments (category entry points). Pick 2-4.",
+    "ideas": [
+      {"name": "How The Heck?", "format": "Justin sings a line as [artist], then reveals the ONE detail that makes it work. 30-45 s."},
+      {"name": "Karaoke Rescue", "format": "One song people butcher at karaoke plus the fix. Post before weekends."},
+      {"name": "Now Singing As…", "format": "Same line, 3 artists back to back. Loopable, 15-25 s."},
+      {"name": "Before / After", "format": "Student transformations (with permission). Proof content for launches."}
+    ]
+  },
+
+  "photos": {
+    "approved": [
+      "projects/justin-checkout/out/1-hero-smile-16x9.jpg",
+      "projects/justin-checkout/out/2-big-smile-16x9.jpg",
+      "projects/justin-checkout/out/more/5-maroon-hoodie-smile-16x9.jpg",
+      "projects/justin-checkout/out/more/6-curly-big-smile-16x9.jpg",
+      "projects/justin-checkout/out/more/8-sage-hoodie-square.jpg",
+      "projects/justin-checkout/out/4-teaching-16x9.jpg"
+    ],
+    "rules": "Real photos only; light grade (contrast +7%, saturation +10%, slightly warm). No AI edits to his face."
+  }
+}
