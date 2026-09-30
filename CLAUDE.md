@@ -26,6 +26,9 @@ The `vedit` CLI does the mechanical work (ffmpeg + faster-whisper + face trackin
    `projects/<project>/<name>.json` (start from `templates/`).
 5. **Check the timeline before rendering:** `vedit render spec.json --plan` prints the output transcript
    with output timestamps. Read it as a viewer: does the first line hook? Does anything dangle? Is it tight?
+   Then **check every cut against the audio**: `tools/check_cuts.py projects/<p>/work/<name>.timeline.json`.
+   It must print "all cuts land in silence" before you render — fix every flagged cut (see "Cutting on
+   words" below). You can't hear the render, so this is how you listen.
 6. **Draft:** `vedit render spec.json --draft` (half-res, fast). Then `vedit sheet out/<name>.draft.mp4`
    and **look**: faces framed, captions readable and inside safe zones, no overlap, B-roll lands on the
    right words, no black/frozen frames. Check a few exact moments with `--at`.
@@ -121,9 +124,29 @@ Non-negotiables distilled from them:
 - **Real over rendered.** Real photos of the real person; AI only for set dressing — never faces or proof.
 - Tag claims by evidence; don't sell folklore (colour psychology, archetypes, "3-word thumbnails") as fact.
 
+## Cutting on words (no clipped syllables)
+
+A clipped first or last sound is the most noticeable editing mistake, and most likely when you
+**rearrange or split segments** (hook moved to the front, a filler cut out, a punch-in split).
+Hand-set boundaries have no silence around them.
+- **Cut only in silence.** Pick segment `start`/`end` from the audio, not from Whisper word times
+  (they drift 50-150 ms). A start sits just *before* the onset; hard consonants (d, t, b, k, p) start
+  abruptly, so give ≥ 80 ms. An end sits after the tail has decayed. Take ~200 ms: word tails are quiet
+  but audible.
+- **Never end a segment mid-phrase.** If a word runs straight into the next one ("for myself right now")
+  there is no silence to cut in. Extend to the end of the phrase or sentence, or start earlier. Don't
+  trim to the word time.
+- **Removing a filler inside a sentence** ("she's, like, doing"): end just before the filler's
+  onset and start just before the next word's onset. Both edges must still be silent.
+- Reordered / hook-first specs: use `tighten` `pad_in` ≥ 0.08 and `pad_out` ≥ 0.2.
+- Always run `tools/check_cuts.py` after `--plan` (step 5). Nudge flagged edges 30-100 ms into the
+  nearest quiet spot and re-run until it's clean. If a flag is a deliberate cut on sound (music, a
+  laugh), say so to the user.
+
 ## Gotchas
 
-- Whisper word times can be ~50-150 ms off; `pad_in`/`pad_out` cover it. If a cut clips a word, raise
+- Whisper word times can be ~50-150 ms off; `pad_in`/`pad_out` only cover it inside tightened runs —
+  segment edges you set by hand need the audio check above. If a cut clips a word, raise
   `pad_out` or set `"tighten": false` on that segment (also do that for deliberate dramatic pauses).
 - Fillers are cut only when transcribed; the transcriber is prompted to keep "um/uh" so they can be.
 - Low-res sources (<1080p) look soft when cropped to 9:16 — say so rather than promising sharpness.
